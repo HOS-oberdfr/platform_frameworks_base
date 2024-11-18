@@ -47,7 +47,7 @@ public final class hentaiSpoofer {
     private static volatile boolean sIsFinsky = false;
     private static volatile boolean sDevicePackageSpoof = false;
 
-    // Spoofing blacklist
+    // Spoofing processes blacklist
     private static final String[] PROCESSES_BLACKLISTED = {
         // Thermometer for guides
         "com.google.android.apps.pixel.health",
@@ -57,6 +57,12 @@ public final class hentaiSpoofer {
         "com.google.android.GoogleCamera",
         "com.google.android.GoogleCameraEng",
         "com.google.android.apps.googlecamera.fishfood",
+    };
+
+    // Spoofing packages blacklist
+    private static final String[] PACKAGES_BLACKLISTED = {
+        // Call of Duty Warzone
+        "com.activision.callofduty.warzone",
     };
 
     // Spoof every google app
@@ -111,9 +117,18 @@ public final class hentaiSpoofer {
         }
     }
 
-    private static boolean isBlacklisted(String processName) {
-        for (String blacklisted : PROCESSES_BLACKLISTED) {
-            if (processName.startsWith(blacklisted)) {
+    private static boolean isProcessBlacklisted(String processName) {
+        for (String process_blacklisted : PROCESSES_BLACKLISTED) {
+            if (processName.startsWith(process_blacklisted)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean isPackageBlacklisted(String packageName) {
+        for (String package_blacklisted : PACKAGES_BLACKLISTED) {
+            if (packageName.equals(package_blacklisted)) {
                 return true;
             }
         }
@@ -121,7 +136,7 @@ public final class hentaiSpoofer {
     }
 
     private static boolean spoofPackage(String packageName, String processName, String[] spoofProcesses) {
-        if (isBlacklisted(processName)) {
+        if (isProcessBlacklisted(processName) || isPackageBlacklisted(packageName) ) {
             return false;
         }
 
