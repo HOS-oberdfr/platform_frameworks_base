@@ -57,6 +57,8 @@ public final class hentaiSpoofer {
         "com.google.android.GoogleCamera",
         "com.google.android.GoogleCameraEng",
         "com.google.android.apps.googlecamera.fishfood",
+        // Call of Duty Warzone
+        "com.activision.",
     };
 
     // Spoofing packages blacklist
@@ -128,7 +130,7 @@ public final class hentaiSpoofer {
 
     private static boolean isPackageBlacklisted(String packageName) {
         for (String package_blacklisted : PACKAGES_BLACKLISTED) {
-            if (packageName.equals(package_blacklisted)) {
+            if (packageName.startsWith(package_blacklisted)) {
                 return true;
             }
         }
@@ -199,7 +201,8 @@ public final class hentaiSpoofer {
     public static void initApplicationBeforeOnCreate(Context context) {
         final String packageName = context.getPackageName();
         final String processName = Application.getProcessName();
-
+        Log.i(TAG, "InitApplicationBeforeOnCreate PackageName=" + packageName + " ProcessName=" + processName);
+        
         if (TextUtils.isEmpty(packageName) || processName == null) {
             return;
         }
